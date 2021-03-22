@@ -15,7 +15,6 @@ let lastDogAdded = new Dog({
   name: 'unknown dog',
   breed: 'unknown breed',
   age: 0,
-  createdDate: Date.now,
 });
 
 const hostIndex = (req, res) => {
@@ -99,7 +98,7 @@ const setName = (req, res) => {
     }
     const name = `${req.body.firstname} ${req.body.lastname}`;
     const catData = {
-      name,
+      name: name,
       bedsOwned: req.body.beds,
     };
 
@@ -107,6 +106,7 @@ const setName = (req, res) => {
     const savePromise = newCat.save();
     savePromise.then(() => {
       lastCatAdded = newCat;
+      console.log(lastCatAdded);
       res.json({
         name: lastCatAdded.name,
         beds: lastCatAdded.bedsOwned,
@@ -121,7 +121,7 @@ const setName = (req, res) => {
     }
     const name = `${req.body.firstname} ${req.body.lastname}`;
     const dogData = {
-      name,
+      name: name,
       breed: req.body.breed,
       age: req.body.age,
     };
@@ -188,13 +188,19 @@ const getDog = (req, res) => {
     lastDogAdded.age++;
     console.log(lastDogAdded);
 
+    /*
+    const deletePromise = lastDogAdded.delete();
+    deletePromise.catch((error) => {
+      res.status(500).json({ error });
+    });
+    */
+
     const savePromise = lastDogAdded.save();
     savePromise.then(() => {
       res.json({
         name: lastDogAdded.name,
         breed: lastDogAdded.breed,
         age: lastDogAdded.age,
-        createdDate: lastDogAdded.createdDate,
       });
     });
     savePromise.catch((error) => {

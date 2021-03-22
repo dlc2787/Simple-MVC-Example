@@ -21,13 +21,12 @@ const DogSchema = new mongoose.Schema({
   },
   createdDate: {
     type: Date,
-    required: true,
-    default: Date.now,
+    default: Date.now(),
   },
 });
 
 // statics
-// find cats by name
+// find dogs by name
 DogSchema.statics.findByName = (name, callback) => {
   const search = {
     name,
