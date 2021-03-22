@@ -177,23 +177,8 @@ const getDog = (req, res) => {
       return res.json({ error: 'No Dogs Found :(' });
     }
 
-    const dogData = {
-      name: doc.name,
-      breed: doc.breed,
-      age: doc.age,
-      createdDate: doc.createdDate,
-    };
-
-    lastDogAdded = new Dog(dogData);
+    lastDogAdded = doc;
     lastDogAdded.age++;
-    console.log(lastDogAdded);
-
-    /*
-    const deletePromise = lastDogAdded.delete();
-    deletePromise.catch((error) => {
-      res.status(500).json({ error });
-    });
-    */
 
     const savePromise = lastDogAdded.save();
     savePromise.then(() => {
